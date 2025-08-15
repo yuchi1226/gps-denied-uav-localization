@@ -1,7 +1,7 @@
 import sys
-sys.path.insert(0, '../deep_feat') # to reach DeepLKBatch
-import DeepLKBatch as dlk
-import sift_ransac_homography as srh
+sys.path.insert(0, './deep_feat') # to reach DeepLKBatch
+import deep_feat.DeepLKBatch as dlk
+import deep_feat.sift_ransac_homography as srh
 
 import torch
 import torch.nn as nn
