@@ -11,6 +11,11 @@ To train the deep features from satellite images, and to test on the flight data
 - SciPy 0.19.1
 - Matplotlib 2.0.2
 
+```
+pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 --index-url https://download.pytorch.org/whl/cu121
+pip install sciPy matplotlib requests
+```
+
 Download dataset folders from [this Google Drive](https://drive.google.com/drive/folders/1sscpYCZXCRUWKl9eUDQGz-DZQLo3HeDe?usp=sharing) and add to top level of repo after downloading.
 
 ### Training and Testing Deep Features
@@ -18,7 +23,7 @@ Download dataset folders from [this Google Drive](https://drive.google.com/drive
 In `deep_feat/`, fine-tune VGG16 conv3 block with New Jersey dataset ('woodbridge'):
 
 ```
-python3 evaluate.py train woodbridge ../sat_data/ trained_model_output.pth ../models/vgg16_model.pth
+python evaluate.py train woodbridge ../sat_data/ trained_model_output.pth ../models/vgg16_model.pth
 ```
 
 ### Testing Alignment on UAV Datasets
