@@ -13,7 +13,7 @@ To train the deep features from satellite images, and to test on the flight data
 
 ```
 pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 --index-url https://download.pytorch.org/whl/cu121
-pip install sciPy matplotlib requests
+pip install sciPy matplotlib requests opencv-python autograd
 ```
 
 Download dataset folders from [this Google Drive](https://drive.google.com/drive/folders/1sscpYCZXCRUWKl9eUDQGz-DZQLo3HeDe?usp=sharing) and add to top level of repo after downloading.
