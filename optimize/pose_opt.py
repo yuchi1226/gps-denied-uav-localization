@@ -1,5 +1,5 @@
 import sys
-#sys.path.insert(0, '../deep_feat') # to reach DeepLKBatch
+sys.path.insert(0, '../deep_feat') # to reach DeepLKBatch
 import deep_feat.DeepLKBatch as dlk
 import deep_feat.sift_ransac_homography as srh
 
@@ -17,7 +17,7 @@ import time
 from math import cos, sin, pi, sqrt, ceil
 import random
 import sys
-import autograd.numpy as np
+import autograd.numpy as anp
 from autograd import grad, jacobian
 from functools import reduce
 from pdb import set_trace as st
@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 import scipy.io as sio
 import numpy as np
 
-def optimize(I, P, T, V, tol, coeff_mult):
+def optimize(I, P, T, V, tol, coeff_mult=1):
 	'''
 	Args:
 		I: Image sequence, 4D numpy array, num_frame x C x H x W
@@ -55,7 +55,8 @@ def optimize(I, P, T, V, tol, coeff_mult):
 	I_grady = np.gradient(I, axis=2)
 
 	dP = np.zeros([num_frame - 1, 8, 1])
-	crit = 0
+	#crit = 0
+	crit = np.inf
 
 	itn = 1
 
@@ -728,7 +729,9 @@ def test_2img(args):
 		]
 	)
 
-	V = np.delete(V, 0)
+	#V = np.delete(V, 0)
+	V = list(V)
+	V.pop(0)
 
 	tol = 1e-4
 
