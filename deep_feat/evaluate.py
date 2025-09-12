@@ -21,6 +21,7 @@ import gc
 import numpy as np
 import sift_ransac_homography as srh
 import argparse
+import numpy as np
 
 # USAGE:
 # python3 evaluate.py MODE FOLDER_NAME DATAPATH MODEL_PATH VGG_MODEL_PATH --TEST_DATA_SAVE_PATH
