@@ -355,7 +355,7 @@ def compute_Jm(Mf_gradx, Mf_grady, P_init, P, T, P_mk_rel, P_mk0):
 
 					return P_mk
 
-				grad_P_mk = jacobian(Pmk)
+				grad_P_mk = jacobian(Pmk, 0)  # 0 indicates to take derivative with respect to first argument
 
 				P_F = H_to_p(H_mk[H_F_ind, :, :])
 				P_F = P_F.squeeze(0)
@@ -440,7 +440,7 @@ def compute_Ji(I_gradx, I_grady, P, T, V, P_fk, V_sz):
 						return P_fk
 
 					# using auto-grad library for computing jacobian (8x8)
-					grad_P_fk = jacobian(Pfk)
+					grad_P_fk = jacobian(Pfk, 0)
 
 					P_F = H_to_p(H_fk[H_F_ind, :, :])
 					P_F = P_F.squeeze(0)
@@ -480,7 +480,7 @@ def compute_Ji(I_gradx, I_grady, P, T, V, P_fk, V_sz):
 						P_fk = P_fk.squeeze(0)
 						return P_fk
 
-					grad_P_fk = jacobian(Pfk)
+					grad_P_fk = jacobian(Pfk, 0)
 
 					P_F = H_to_p(H_kf[H_F_ind, :, :])
 					P_F = P_F.squeeze(0)
@@ -751,17 +751,17 @@ def test_2img(args):
 
 	plt.figure()
 	plt.subplot(2, 2, 1)
-	plt.imshow(plt_tens_to_np(img_tens[0,:,:,:]))
+	plt.imshow(plt_axis_match_tens(img_tens[0,:,:,:]))
 	plt.title('Original')
 
 	plt.subplot(2, 2, 2)
-	plt.imshow(plt_tens_to_np(img_tens_w[0,:,:,:]))
+	plt.imshow(plt_axis_match_tens(img_tens_w[0,:,:,:]))
 	plt.title('Warped')
 
 	img_tens_uw, _ = dlk.warp_hmg(img_tens, torch.from_numpy(P_opt).float())
 
 	plt.subplot(2, 2, 4)
-	plt.imshow(plt_tens_to_np(img_tens_uw[0,:,:,:]))
+	plt.imshow(plt_axis_match_tens(img_tens_uw[0,:,:,:]))
 	plt.title('LK Warped')
 
 	plt.show()
@@ -1003,7 +1003,7 @@ def test_img_seq(args):
 		if (i == 0):
 			I_w = torch.from_numpy(I[i : i + 1, :, :, :])
 		else:
-			I_w, _ = dlk.warp_hmg(I_w, torch.from_numpy(P_opt_dep[i - 1 : i, :, :]).float())
+			I_w, _ = dlk.warp_hmg(I_w, torch.from_numpy(P_opt_dep[i - 1 : i, :, :]).float()) # type: ignore
 
 		plt.imshow(plt_axis_match_tens(I_w[0, :, :, :]))
 
@@ -1094,7 +1094,8 @@ def open_img_as_tens(img_path, sz):
 	img_w_sm = ceil(aspect * img_h_sm)
 
 	img_tens = preprocess(img.resize((img_w_sm, img_h_sm)))
-	img_tens = torch.unsqueeze(img_tens, 0)
+	#img_tens = torch.unsqueeze(img_tens, 0)
+ 	img_tens = img_tens.unsqueeze(0) # type: ignore
 
 	return img_tens
 
@@ -1136,7 +1137,7 @@ def extract_map_templates(P_mk, M, T, img_c, img_h, img_w):
 		# plt.imshow(M_warp_pil_crop)
 		# plt.show()
 
-		M_warp_pil_sm = M_warp_pil_crop.resize((img_w, img_h), Image.BILINEAR)
+		M_warp_pil_sm = M_warp_pil_crop.resize((img_w, img_h), Image.Resampling.BILINEAR)
 
 		M_warp_np_sm = transforms.ToTensor()(M_warp_pil_sm)
 
@@ -1301,7 +1302,7 @@ def optimize_wmap_test(args):
 		print(P_mk_rel_samp)
 		print('')
 
-		H_w = p_to_H(p_w)
+		H_w = p_to_H(p_w) # type: ignore
 		H_w_inv = np.linalg.inv(H_w)
 		p_w_inv = H_to_p(H_w_inv)
 		print('inv(p_w):')
