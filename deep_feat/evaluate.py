@@ -199,9 +199,14 @@ def static_data_generator(batch_size):
 		p_gt = p_gt.view(8,1)
 		p_gt = p_gt.repeat(1,1,1)
 
-		inv_func = dlk.InverseBatch()
+		#inv_func = dlk.InverseBatch()
 
-		img_seg_pad_w, _ = dlk.warp_hmg(img_seg_pad.unsqueeze(0), dlk.H_to_param(inv_func(dlk.param_to_H(p_gt))))
+		#img_seg_pad_w, _ = dlk.warp_hmg(img_seg_pad.unsqueeze(0), dlk.H_to_param(inv_func(dlk.param_to_H(p_gt))))
+  
+		img_seg_pad_w, _ = dlk.warp_hmg(
+			img_seg_pad.unsqueeze(0),
+			dlk.H_to_param(dlk.InverseBatch.apply(dlk.param_to_H(p_gt)))
+		)
 
 		img_seg_pad_w.squeeze_(0)
 
@@ -313,9 +318,14 @@ def data_generator(batch_size):
 		p_gt = p_gt.view(8,1)
 		p_gt = p_gt.repeat(1,1,1)
 
-		inv_func = dlk.InverseBatch()
+		#inv_func = dlk.InverseBatch()
 
-		img_seg_pad_w, _ = dlk.warp_hmg(img_seg_pad.unsqueeze(0), dlk.H_to_param(inv_func(dlk.param_to_H(p_gt))))
+		#img_seg_pad_w, _ = dlk.warp_hmg(img_seg_pad.unsqueeze(0), dlk.H_to_param(inv_func(dlk.param_to_H(p_gt))))
+  
+		img_seg_pad_w, _ = dlk.warp_hmg(
+			img_seg_pad.unsqueeze(0),
+			dlk.H_to_param(dlk.InverseBatch.apply(dlk.param_to_H(p_gt)))
+		)
 
 		img_seg_pad_w.squeeze_(0)
 
@@ -518,7 +528,8 @@ def train():
 	best_valid_loss = 0
 
 	minibatch_sz = 10
-	num_minibatch = 25000
+	#num_minibatch = 25000
+	num_minibatch = 50
 	valid_batch_sz = 10
 	valid_num_generator = 50
 
@@ -618,7 +629,7 @@ def train():
 if __name__ == "__main__":
 	print('PID: ', os.getpid())
 
-	if MODE == 'test':
+	if MODE == 'test': # type:ignore
 		test()
 	else:
 		train()
