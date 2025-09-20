@@ -18,7 +18,7 @@ Download dataset folders from [this Google Drive](https://drive.google.com/drive
 In `deep_feat/`, fine-tune VGG16 conv3 block with New Jersey dataset ('woodbridge'):
 
 ```
-python3 evaluate.py train woodbridge ../sat_data/ trained_model_output.pth ../models/vgg16_model.pth
+python evaluate.py train woodbridge ../sat_data/ trained_model_output.pth ../models/vgg16_model.pth
 ```
 
 ### Testing Alignment on UAV Datasets
@@ -26,13 +26,13 @@ python3 evaluate.py train woodbridge ../sat_data/ trained_model_output.pth ../mo
 In `optimize/`, testing alignment on Village dataset using trained model, aligning every UAV image in dataset sequentially with the map:
 
 ```
-python3 pose_opt.py sliding_window -image_dir ../village/frames/ -image_dir_ext *.JPG -motion_param_loc ../village/P_village.csv -map_loc ../village/map_village.jpg -model_path ../models/conv_02_17_18_1833.pth -opt_img_height 100 -img_h_rel_pose 1036.8 -opt_param_save_loc ../village/test_out.mat
+python pose_opt.py sliding_window -image_dir ../village/frames/ -image_dir_ext *.JPG -motion_param_loc ../village/P_village.csv -map_loc ../village/map_village.jpg -model_path ../models/conv_02_17_18_1833.pth -opt_img_height 100 -img_h_rel_pose 1036.8 -opt_param_save_loc ../village/test_out.mat
 ```
 
 Testing alignment on Gravel-Pit dataset using trained model:
 
 ```
-python3 pose_opt.py sliding_window -image_dir ../gravel_pit/frames/ -image_dir_ext *.JPG -motion_param_loc ../gravel_pit/P_gravel_pit.csv -map_loc ../gravel_pit/map_gravel_pit.jpg -model_path ../models/conv_02_17_18_1833.pth -opt_img_height 100 -img_h_rel_pose 864 -opt_param_save_loc ../gravel_pit/test_out.mat
+python pose_opt.py sliding_window -image_dir ../gravel_pit/frames/ -image_dir_ext *.JPG -motion_param_loc ../gravel_pit/P_gravel_pit.csv -map_loc ../gravel_pit/map_gravel_pit.jpg -model_path ../models/conv_02_17_18_1833.pth -opt_img_height 100 -img_h_rel_pose 864 -opt_param_save_loc ../gravel_pit/test_out.mat
 ```
 
 See `argparse` help for argument documentation.
