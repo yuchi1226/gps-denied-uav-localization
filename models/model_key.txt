@@ -1,0 +1,6 @@
+MODEL KEY
+
+conv_02_17_18_1833, frozen conv1:2, fine-tune conv3, 256 output channel, max-pooling, dynamic LK iterations, trained on 5x1000 training pairs, tested on 5x1000 testing pairs, [53.54,22.65,58.86]
+conv_02_19_18_2103, frozen conv1:2, fine-tune conv3, 8 output channel, max-pooling, dynamic LK iterations, trained on 5x1000 training pairs, tested on 5x1000 testing pairs, [59.15,23.9897,56.44]
+conv_02_22_18_1503, frozen conv1:2, fine-tune conv3, 256 output channel, stride-2 conv, dynamic LK iterations, trained on 5x1000 training pairs, tested on 5x1000 testing pairs, [56.33, 28.54, 60.39]
+conv_02_23_18_1036, fine-tune conv1:3, 256 output channel, max-pooling, dynamic LK iterations, trained on 5x10,000 training pairs, tested on 5x1000 testing pairs
